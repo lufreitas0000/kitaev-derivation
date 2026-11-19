@@ -58,7 +58,7 @@ def main() -> int:
         f"# TIMESTAMP_UTC: {datetime.now(UTC).isoformat()}",
         f"# GIT_SHA: {_git_sha()}",
         "# CONVENTION: spin_12 (H = sum J_{ab} S_i^a S_j^b on z-bond; Pauli = spin_12 / 4)",
-        "regime U J_H t1 t2 t3 t4 lam_soc J_sym K_sym Gamma_sym Gp_sym J_fock K_fock max_abs_diff",
+        "regime U J_H t1 t2 t3 t4 lam_soc J_sym K_sym Gamma_sym Gp_sym J_fock_lam0 K_fock_lam0 max_abs_diff_lam0 J_fock_soc K_fock_soc max_soc_shift",
     ]
     summary_rows: list[dict[str, float | str]] = []
     for name, u_v, jh_v, t1_v, t2_v, t3_v, t4_v, lam_v in cases:
@@ -68,35 +68,45 @@ def main() -> int:
         g_s = float(sym_z["Gamma"].evalf(subs=subs))
         gp_s = float(sym_z["Gamma_prime"].evalf(subs=subs))
 
-        fock = compute_fock_schrieffer_wolff_exchange(
+        fock_lam0 = compute_fock_schrieffer_wolff_exchange(
             "z", u_v, jh_v, t2_v, t1=t1_v, t3=t3_v, t4=t4_v
         )
-        max_diff = max(
-            abs(j_s - fock.J),
-            abs(k_s - fock.K),
-            abs(g_s - fock.Gamma),
-            abs(gp_s - fock.Gamma_prime),
+        max_diff_lam0 = max(
+            abs(j_s - fock_lam0.J),
+            abs(k_s - fock_lam0.K),
+            abs(g_s - fock_lam0.Gamma),
+            abs(gp_s - fock_lam0.Gamma_prime),
         )
         if lam_v > 0.0:
             fock_soc = compute_fock_soc_finite_exchange(
                 "z", u_v, jh_v, lam_v, t2_v, t1=t1_v, t3=t3_v, t4=t4_v
             )
-            j_f, k_f = fock_soc.J, fock_soc.K
+            j_soc, k_soc = fock_soc.J, fock_soc.K
+            soc_shift = max(abs(j_soc - fock_lam0.J), abs(k_soc - fock_lam0.K))
         else:
-            j_f, k_f = fock.J, fock.K
+            j_soc, k_soc = fock_lam0.J, fock_lam0.K
+            soc_shift = 0.0
 
         lines.append(
             f"{name} {u_v:.4f} {jh_v:.4f} {t1_v:.4f} {t2_v:.4f} {t3_v:.4f} {t4_v:.4f} {lam_v:.4f} "
-            f"{j_s:.10f} {k_s:.10f} {g_s:.10f} {gp_s:.10f} {j_f:.10f} {k_f:.10f} {max_diff:.3e}"
+            f"{j_s:.10f} {k_s:.10f} {g_s:.10f} {gp_s:.10f} "
+            f"{fock_lam0.J:.10f} {fock_lam0.K:.10f} {max_diff_lam0:.3e} "
+            f"{j_soc:.10f} {k_soc:.10f} {soc_shift:.3e}"
         )
         summary_rows.append(
             {
                 "regime": name,
+                "lam_soc": lam_v,
                 "J_sym": j_s,
                 "K_sym": k_s,
                 "Gamma_sym": g_s,
                 "Gamma_prime_sym": gp_s,
-                "max_abs_diff_lam0": max_diff,
+                "J_fock_lam0": fock_lam0.J,
+                "K_fock_lam0": fock_lam0.K,
+                "max_abs_diff_lam0": max_diff_lam0,
+                "J_fock_soc": j_soc,
+                "K_fock_soc": k_soc,
+                "max_soc_shift": soc_shift,
             }
         )
 

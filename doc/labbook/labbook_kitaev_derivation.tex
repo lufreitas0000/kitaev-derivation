@@ -28,7 +28,7 @@
 % SOURCE [VERIFIED]: Jackeli2009, RauLeeKee2014
 % CLAIM: Theorem-And-Oracle-Verified (M2.1)
 
-In the $t_{2g}$ edge-shared octahedral hole representation ($d^5$ single-hole ground state, $d^4$ two-hole virtual intermediates of dimension $\binom{6}{2}=15$), $T$--$P$ equivalence $\mathbf{L}_{t_{2g}} = -\mathbf{l}_{\mathrm{eff}}$ yields $H_{\mathrm{SOC}} = +\lambda \mathbf{S}\cdot\mathbf{l}_{\mathrm{eff}}$ with Kramers $j_{\mathrm{eff}}=1/2$ doublet eigenenergy $-\lambda$ and $j_{\mathrm{eff}}=3/2$ quartet at $+\lambda/2$.
+In the $t_{2g}$ edge-shared octahedral hole representation ($d^5$ single-hole ground state, $d^4$ two-hole virtual intermediates of dimension $\binom{6}{2}=15$), $T$--$P$ equivalence $\mathbf{L}_{t_{2g}} = -\mathbf{l}_{\mathrm{eff}}$ yields $H_{\mathrm{SOC}} = +\lambda \mathbf{S}\cdot\mathbf{l}_{\mathrm{eff}}$ with Kramers $j_{\mathrm{eff}}=1/2$ doublet eigenenergy $-\lambda$ and $j_{\mathrm{eff}}=3/2$ quartet at $+\lambda/2$~\cite{Jackeli2009}.
 
 Under the spherically symmetric Hubbard--Kanamori Hamiltonian
 \begin{equation}
@@ -38,25 +38,36 @@ the $15$ two-hole intermediate states resolve into $\Delta E_{L=1} = U - 3J_H$ (
 
 \chapter{Symbolic Extraction vs.\ Independent 66-State Fock Oracle}
 % EDITORIAL QUESTION: Do exact SymPy Schrieffer-Wolff reductions agree identically across C3 bonds with exact 66-state Fock projection and finite-SOC corrections?
+% SOURCE [VERIFIED]: Jackeli2009, RauLeeKee2014, Winter2016
+% CLAIM: Oracle-Verified (KD-002)
 
-For general $z$-bond hopping $T_z(t_1,t_2,t_3,t_4)$, right-to-left multiplet projection onto $j_{\mathrm{eff}}=1/2 \otimes j_{\mathrm{eff}}=1/2$ recovers the Jackeli--Khaliullin coupling $K = -\frac{8 J_H t_2^2}{3(U-3J_H)(U-J_H)}$ at $t_1=t_3=t_4=0$ (spin-$1/2$ units; $K/4$ in Pauli $\sigma^\gamma\sigma^\gamma$ units) and $\Gamma(t_4=0) = \frac{16 J_H t_2 (t_1 - t_3)}{9(U-J_H)(U-3J_H)}$. Table~\ref{tab:benchmark-fock} compares symbolic CAS outputs directly against the independent $66$-state two-hole \texttt{scipy.sparse} Fock-space oracle.
+For general $z$-bond hopping $T_z(t_1,t_2,t_3,t_4)$, right-to-left multiplet projection onto $j_{\mathrm{eff}}=1/2 \otimes j_{\mathrm{eff}}=1/2$ recovers the Jackeli--Khaliullin coupling $K = -\frac{8 J_H t_2^2}{3(U-3J_H)(U-J_H)}$ at $t_1=t_3=t_4=0$ (spin-$1/2$ units; $K/4$ in Pauli $\sigma^\gamma\sigma^\gamma$ units)~\cite{Jackeli2009} and $\Gamma(t_4=0) = \frac{16 J_H t_2 (t_1 - t_3)}{9(U-J_H)(U-3J_H)}$~\cite{RauLeeKee2014}. Table~\ref{tab:benchmark-fock} compares symbolic CAS outputs directly against the independent $66$-state two-hole \texttt{scipy.sparse} Fock-space oracle at $\lambda_{\mathrm{int}}=0$ ($\max|\Delta_{\lambda_0}| < 10^{-16}$) alongside the finite-$\lambda_{\mathrm{SOC}}$ intermediate-state denominator shift for $\alpha$-RuCl$_3$-like parameters~\cite{Winter2016}.
 
 \begin{table}[htbp]
   \centering
+  \small
   \caption{ACID verification of symbolic \texttt{SymPy} $(J,K,\Gamma,\Gamma')$ against the independent 66-state Fock oracle (from \texttt{exchange\_vs\_fock\_oracle.dat}).}
   \label{tab:benchmark-fock}
   \pgfplotstabletypeset[
     col sep=space,
     comment chars={\#},
-    columns={regime,J_sym,K_sym,Gamma_sym,max_abs_diff},
+    columns={regime,lam_soc,J_sym,K_sym,Gamma_sym,max_abs_diff_lam0,K_fock_soc},
     columns/regime/.style={string type,column name={Regime},string replace*={_}{\_}},
+    columns/lam_soc/.style={column name={$\lambda_{\mathrm{SOC}}$},fixed,precision=2},
     columns/J_sym/.style={column name={$J_{\mathrm{sym}}$},fixed,precision=5},
     columns/K_sym/.style={column name={$K_{\mathrm{sym}}$},fixed,precision=5},
     columns/Gamma_sym/.style={column name={$\Gamma_{\mathrm{sym}}$},fixed,precision=5},
-    columns/max_abs_diff/.style={column name={$\max|\Delta|$ ($\lambda_{\mathrm{int}}=0$)},sci,precision=2},
+    columns/max_abs_diff_lam0/.style={column name={$\max|\Delta_{\lambda_0}|$},sci,precision=1},
+    columns/K_fock_soc/.style={column name={$K_{\mathrm{Fock}}^{\mathrm{SOC}}$},fixed,precision=5},
     every head row/.style={before row=\toprule,after row=\midrule},
     every last row/.style={after row=\bottomrule},
   ]{../../data/processed/benchmarks/exchange_vs_fock_oracle.dat}
 \end{table}
+
+\begin{thebibliography}{9}
+\bibitem{Jackeli2009} G.~Jackeli and G.~Khaliullin, Phys.\ Rev.\ Lett.\ \textbf{102}, 017205 (2009), \href{https://arxiv.org/abs/0809.4658}{arXiv:0809.4658}.
+\bibitem{RauLeeKee2014} J.~G.~Rau, E.~K.-H.~Lee, and H.-Y.~Kee, Phys.\ Rev.\ Lett.\ \textbf{112}, 077204 (2014), \href{https://arxiv.org/abs/1310.7940}{arXiv:1310.7940}.
+\bibitem{Winter2016} S.~M.~Winter, Y.~Li, H.~O.~Jeschke, and R.~Valent\'i, Phys.\ Rev.\ B \textbf{93}, 214431 (2016), \href{https://arxiv.org/abs/1603.02548}{arXiv:1603.02548}.
+\end{thebibliography}
 
 \end{document}

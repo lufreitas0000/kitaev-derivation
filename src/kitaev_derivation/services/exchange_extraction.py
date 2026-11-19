@@ -288,6 +288,7 @@ def extract_exchange_tensors(
     """Extract (J, K, Gamma, Gamma_prime, J_xx..J_zz) from a Pauli-expanded pseudospin Hamiltonian.
 
     Args:
+        h_pseudospin: Hermitian second-order pseudospin Hamiltonian assuming real (U, J_H, t_a).
         convention: 'spin_12' for H = sum J_{ab} S_i^a S_j^b (S = sigma/2, J_{ab} = 4 * C_{ab}),
                     or 'pauli' for H = sum K_{ab} sigma_i^a sigma_j^b (aligned with qsl_conventions.json).
     """
@@ -298,7 +299,16 @@ def extract_exchange_tensors(
         for term in h_pseudospin.terms:
             prod = term * probe
             tr_val = tr_val + evaluate_pauli_trace(prod)
-        c_pauli = sp.cancel(sp.re(tr_val / 4))
+        real_tr = (tr_val + sp.conjugate(tr_val)) / 2
+        if isinstance(real_tr, Expr):
+            real_tr = real_tr.subs({sym: sym for sym in real_tr.free_symbols})
+        c_pauli = (
+            sp.cancel(tr_val / 4) if tr_val.is_real is True else sp.cancel(sp.expand(real_tr) / 4)
+        )
+        # If symbolic parameters were created without real=True, take real part explicitly after
+        # removing purely imaginary cancellation terms via expansion.
+        if sp.I in c_pauli.atoms():
+            c_pauli = sp.cancel(sp.re(c_pauli))
         if convention == "spin_12":
             return sp.cancel(4 * c_pauli)
         if convention == "pauli":
@@ -333,12 +343,19 @@ def extract_exchange_tensors(
     else:
         raise ValueError(f"Unsupported bond '{bond}'.")
 
+    d_x = sp.cancel((j_mat[("y", "z")] - j_mat[("z", "y")]) / 2)
+    d_y = sp.cancel((j_mat[("z", "x")] - j_mat[("x", "z")]) / 2)
+    d_z = sp.cancel((j_mat[("x", "y")] - j_mat[("y", "x")]) / 2)
+
     return {
         "J": J,
         "K": K,
         "Gamma": Gamma,
         "Gamma_prime": Gamma_prime,
-        "D": sp.Integer(0),
+        "D": d_x if (d_x != 0) else (d_y if d_y != 0 else d_z),
+        "D_x": d_x,
+        "D_y": d_y,
+        "D_z": d_z,
         "J_xx": j_mat[("x", "x")],
         "J_yy": j_mat[("y", "y")],
         "J_zz": j_mat[("z", "z")],

@@ -14,11 +14,17 @@
 \maketitle
 
 \begin{abstract}
-We present the exact symbolic Schrieffer--Wolff projector derivation and independent $66$-state two-hole Fock-space verification implemented in \texttt{kitaev-derivation}. Operating cleanly within the $t_{2g}$ $d^5$--$d^4$--$d^6$ Hubbard--Kanamori manifold, the Python/\texttt{SymPy} engine establishes exact $C_2$ and $C_3$ bond covariance, $J_H=0$ destructive interference, the Jackeli--Khaliullin and Rau--Lee--Kee closed-form $(J, K, \Gamma, \Gamma')$ tensors, and machine-precision parity ($<10^{-13}$) against an independent \texttt{scipy.sparse} Fock oracle, while quantifying finite-$\lambda_{\mathrm{SOC}}$ intermediate-state denominator shifts.
+% EDITORIAL QUESTION: Can exact symbolic Schrieffer-Wolff projector reductions and an independent 66-state Fock oracle eliminate representation drift in deriving microscopic $(J,K,\Gamma,\Gamma')$ interactions?
+% SOURCE [VERIFIED]: Jackeli2009, RauLeeKee2014, Winter2016
+% CLAIM: Theorem-And-Oracle-Verified (M2.1)
+We present the exact symbolic Schrieffer--Wolff projector derivation and independent $66$-state two-hole Fock-space verification implemented in \texttt{kitaev-derivation}~\cite{Jackeli2009,RauLeeKee2014,Winter2016}. Operating cleanly within the $t_{2g}$ $d^5$--$d^4$--$d^6$ Hubbard--Kanamori manifold, the Python/\texttt{SymPy} engine establishes exact $C_2$ and $C_3$ bond covariance, $J_H=0$ destructive interference, the Jackeli--Khaliullin and Rau--Lee--Kee closed-form $(J, K, \Gamma, \Gamma')$ tensors, and machine-precision parity ($<10^{-16}$) against an independent \texttt{scipy.sparse} Fock oracle in the $\lambda_{\mathrm{int}}=0$ intermediate-state limit, while separately quantifying finite-$\lambda_{\mathrm{SOC}}$ intermediate-state denominator shifts.
 \end{abstract}
 
 \section{Model and Strong-Coupling Reduction}
-For edge-shared octahedral transition-metal ions ($d^5$, one $t_{2g}$ hole per site), the unperturbed atomic problem splits into the $j_{\mathrm{eff}}=1/2$ Kramers doublet ground state and the $15$-dimensional two-hole $d^4$ Hubbard--Kanamori multiplets $P_{[L=0,1,2]}$ with excitation gaps $\Delta E_0 = U + 2J_H$, $\Delta E_1 = U - 3J_H$, and $\Delta E_2 = U - J_H$.
+% EDITORIAL QUESTION: How do exact multiplet projectors $P_{[L=0,1,2]}$ map hopping channels into $(J,K,\Gamma,\Gamma')$ tensors?
+% SOURCE [VERIFIED]: Jackeli2009, RauLeeKee2014
+% CLAIM: Mathematical-Identity (KD-001)
+For edge-shared octahedral transition-metal ions ($d^5$, one $t_{2g}$ hole per site), the unperturbed atomic problem splits into the $j_{\mathrm{eff}}=1/2$ Kramers doublet ground state and the $15$-dimensional two-hole $d^4$ Hubbard--Kanamori multiplets $P_{[L=0,1,2]}$ with excitation gaps $\Delta E_0 = U + 2J_H$, $\Delta E_1 = U - 3J_H$, and $\Delta E_2 = U - J_H$~\cite{Jackeli2009,RauLeeKee2014}.
 
 Second-order canonical Schrieffer--Wolff reduction yields
 \begin{equation}
@@ -27,24 +33,29 @@ Second-order canonical Schrieffer--Wolff reduction yields
 whose projection onto $j_{\mathrm{eff}}=1/2 \otimes j_{\mathrm{eff}}=1/2$ yields $H_{\mathrm{spin}} = \sum_{\alpha\beta} J_{\alpha\beta}^{(\gamma)} S_i^\alpha S_j^\beta$ (equivalently $K_{\alpha\beta}^{(\gamma)} = J_{\alpha\beta}^{(\gamma)}/4$ in the Pauli $\sigma_i^\alpha\sigma_j^\beta$ convention of \texttt{qsl\_conventions.json}).
 
 \section{Closed-Form Verification and Finite-SOC Departures}
-In the pure ligand-mediated limit ($t_1=t_3=t_4=0$), the $L=0$ channel vanishes inside the $j_{\mathrm{eff}}=1/2$ doublet and destructive interference between $L=1$ and $L=2$ enforces $J=\Gamma=\Gamma'=0$ with $K = -\frac{8J_H t_2^2}{3(U-3J_H)(U-J_H)}$. Switching on direct hopping ($t_1, t_3, t_4$) yields exact $C_3$-covariant $\Gamma(t_4=0) = \frac{16J_H t_2 (t_1 - t_3)}{9(U-J_H)(U-3J_H)}$ and nonzero $\Gamma' \propto t_4$. As documented in Table~\ref{tab:ms-fock}, all symbolic expressions match the independent $66$-state two-hole Fock oracle to $\max|\Delta| < 10^{-16}$.
+% EDITORIAL QUESTION: Does the 66-state sparse Fock oracle verify both exact lambda_int=0 analytic expressions and finite-lambda_SOC corrections?
+% SOURCE [VERIFIED]: RauLeeKee2014, Winter2016
+% CLAIM: Oracle-Verified (KD-002)
+In the pure ligand-mediated limit ($t_1=t_3=t_4=0$), the $L=0$ channel vanishes inside the $j_{\mathrm{eff}}=1/2$ doublet and destructive interference between $L=1$ and $L=2$ enforces $J=\Gamma=\Gamma'=0$ with $K = -\frac{8J_H t_2^2}{3(U-3J_H)(U-J_H)}$~\cite{Jackeli2009}. Switching on direct hopping ($t_1, t_3, t_4$) yields exact $C_3$-covariant $\Gamma(t_4=0) = \frac{16J_H t_2 (t_1 - t_3)}{9(U-J_H)(U-3J_H)}$ and nonzero $\Gamma' \propto t_4$~\cite{RauLeeKee2014}. As documented in Table~\ref{tab:ms-fock}, all symbolic expressions match the $\lambda_{\mathrm{int}}=0$ $66$-state two-hole Fock oracle $(J_{\mathrm{Fock}}^{\lambda_0}, K_{\mathrm{Fock}}^{\lambda_0})$ to $\max|\Delta_{\lambda_0}| < 10^{-16}$; for \texttt{RuCl3\_lam\_0p15} ($\lambda_{\mathrm{SOC}} = 0.15$ eV~\cite{Winter2016}), the final three columns separately isolate the finite-SOC intermediate-state denominator shift $(J_{\mathrm{Fock}}^{\mathrm{SOC}}, K_{\mathrm{Fock}}^{\mathrm{SOC}})$.
 
 \begin{table}[htbp]
   \centering
-  \caption{Cross-verification of symbolic \texttt{SymPy} exchange tensors against the independent $66$-state Fock oracle across benchmark parameter sets.}
+  \scriptsize
+  \caption{Cross-verification of symbolic \texttt{SymPy} exchange tensors against the independent $66$-state Fock oracle at $\lambda_{\mathrm{int}}=0$ (showing exact parity $\max|\Delta_{\lambda_0}| < 10^{-16}$) alongside finite-$\lambda_{\mathrm{SOC}}$ intermediate-state values.}
   \label{tab:ms-fock}
   \pgfplotstabletypeset[
     col sep=space,
     comment chars={\#},
-    columns={regime,J_sym,K_sym,Gamma_sym,Gp_sym,J_fock,K_fock,max_abs_diff},
+    columns={regime,lam_soc,J_sym,K_sym,J_fock_lam0,K_fock_lam0,max_abs_diff_lam0,J_fock_soc,K_fock_soc},
     columns/regime/.style={string type,column name={Regime},string replace*={_}{\_}},
+    columns/lam_soc/.style={column name={$\lambda_{\mathrm{SOC}}$},fixed,precision=2},
     columns/J_sym/.style={column name={$J_{\mathrm{sym}}$},fixed,precision=5},
     columns/K_sym/.style={column name={$K_{\mathrm{sym}}$},fixed,precision=5},
-    columns/Gamma_sym/.style={column name={$\Gamma_{\mathrm{sym}}$},fixed,precision=5},
-    columns/Gp_sym/.style={column name={$\Gamma'_{\mathrm{sym}}$},fixed,precision=5},
-    columns/J_fock/.style={column name={$J_{\mathrm{Fock}}$},fixed,precision=5},
-    columns/K_fock/.style={column name={$K_{\mathrm{Fock}}$},fixed,precision=5},
-    columns/max_abs_diff/.style={column name={$\max|\Delta|$},sci,precision=1},
+    columns/J_fock_lam0/.style={column name={$J_{\mathrm{Fock}}^{\lambda_0}$},fixed,precision=5},
+    columns/K_fock_lam0/.style={column name={$K_{\mathrm{Fock}}^{\lambda_0}$},fixed,precision=5},
+    columns/max_abs_diff_lam0/.style={column name={$\max|\Delta_{\lambda_0}|$},sci,precision=1},
+    columns/J_fock_soc/.style={column name={$J_{\mathrm{Fock}}^{\mathrm{SOC}}$},fixed,precision=5},
+    columns/K_fock_soc/.style={column name={$K_{\mathrm{Fock}}^{\mathrm{SOC}}$},fixed,precision=5},
     every head row/.style={before row=\toprule,after row=\midrule},
     every last row/.style={after row=\bottomrule},
   ]{../../data/processed/benchmarks/exchange_vs_fock_oracle.dat}
@@ -52,5 +63,11 @@ In the pure ligand-mediated limit ($t_1=t_3=t_4=0$), the $L=0$ channel vanishes 
 
 \section{Outlook: Fourth-Order Ring Exchange (Wave 3)}
 Wave 3 extends this exact pipeline to $O(t^4 / U^3)$ four-site plaquette ring-exchange terms and exports provenance-stamped parameter sets to \texttt{kitaev-mf} and \texttt{ksl-sc-bilayer}, while formal Lean~4 CAR/projector proofs reside in \texttt{finite-QMB}.
+
+\begin{thebibliography}{9}
+\bibitem{Jackeli2009} G.~Jackeli and G.~Khaliullin, Mott Insulators in the Strong Spin-Orbit Coupling Limit: From Heisenberg to a Quantum Compass and Kitaev Models, Phys.\ Rev.\ Lett.\ \textbf{102}, 017205 (2009), \href{https://arxiv.org/abs/0809.4658}{arXiv:0809.4658}.
+\bibitem{RauLeeKee2014} J.~G.~Rau, E.~K.-H.~Lee, and H.-Y.~Kee, Generic Spin Model for the Honeycomb Iridates beyond the Kitaev Limit, Phys.\ Rev.\ Lett.\ \textbf{112}, 077204 (2014), \href{https://arxiv.org/abs/1310.7940}{arXiv:1310.7940}.
+\bibitem{Winter2016} S.~M.~Winter, Y.~Li, H.~O.~Jeschke, and R.~Valent\'i, Challenges in design of Kitaev materials: Magnetic interactions from competing energy scales, Phys.\ Rev.\ B \textbf{93}, 214431 (2016), \href{https://arxiv.org/abs/1603.02548}{arXiv:1603.02548}.
+\end{thebibliography}
 
 \end{document}

@@ -44,8 +44,8 @@ def test_symbolic_cas_matches_66_state_sparse_oracle_to_machine_precision() -> N
             assert abs(sym_vals["Gamma_prime"] - oracle.Gamma_prime) < 1e-13
 
 
-def test_finite_soc_intermediate_state_approaches_strong_soc_limit() -> None:
-    """Check finite-lambda_SOC 66-state intermediate-state resolvent vs. lambda_SOC=0 Kanamori limit."""
+def test_finite_soc_intermediate_state_approaches_zero_int_soc_limit() -> None:
+    """Check finite-lambda_SOC 66-state intermediate resolvent vs. lambda_int -> 0 Kanamori limit."""
     res_lam0 = compute_fock_soc_finite_exchange(
         "z", U=4.0, J_H=0.6, lam_soc=0.0, t2=0.25, t1=0.05, t3=-0.15, t4=0.02
     )

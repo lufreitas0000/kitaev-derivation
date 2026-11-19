@@ -5,7 +5,7 @@ Machine state: [PROJECT_STATE.yaml](PROJECT_STATE.yaml)
 
 ## Scientific / Engineering Objective
 
-Complete the pure-Python `SymPy` migration of `KitaevDerivation.jl` (`M2.1`), integrating all Phase 3 Appendix A commutator oracles from archived checkpoint `0aed437` and validating exact second-order $(J, K, \Gamma, \Gamma')$ extraction to `< 1e-13` against an independent 66-state two-hole Fock-space oracle (`scipy.sparse`), while decoupling formal Lean 4 proofs via [`doc/lean_handoff_finite_qmb.md`](doc/lean_handoff_finite_qmb.md).
+Complete the pure-Python `SymPy` migration of `KitaevDerivation.jl` (`M2.1`), verifying Appendix A Kanamori-hopping commutators (`[V_N, T_m]`, `[V_S, T_m]`, `[V_L, T_m]`) directly on 12-mode two-site Fock spaces (`N_tot=2,3`) and validating exact second-order $(J, K, \Gamma, \Gamma')$ extraction to `< 1e-13` against an independent 66-state two-hole Fock-space oracle (`scipy.sparse`), while decoupling formal Lean 4 proofs via [`doc/lean_handoff_finite_qmb.md`](doc/lean_handoff_finite_qmb.md).
 
 ## Scope and Non-Goals
 

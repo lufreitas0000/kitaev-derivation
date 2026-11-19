@@ -273,7 +273,9 @@ def compute_fock_soc_finite_exchange(
 ) -> FockOracleResult:
     """Evaluate 66-state Schrieffer-Wolff WITH finite single-site SOC in intermediate states.
 
-    Validates convergence to the lambda_SOC >> J_H analytic manifold as well as finite-lambda corrections.
+    Quantifies finite-lambda_SOC departures from the analytical strong-coupling limit
+    lambda_SOC / (U - 3J_H) -> 0 in d^4 intermediate denominators (while retaining
+    lambda_SOC >> t^2 / U so external states stay projected onto j_eff = 1/2).
     """
     v_kan, n0, n1 = _build_kanamori_66(U, J_H)
     _, _, _, h_so_unit6 = _single_site_operators()

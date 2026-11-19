@@ -5,7 +5,7 @@ current_milestone: M2.1
 milestone_history: []
 active_milestone:
   id: M2.1
-  description: "Pure-Python SymPy Schrieffer-Wolff projector CAS, 0aed437 Appendix A commutators, and 66-state sparse Fock oracle parity"
+  description: "Pure-Python SymPy Schrieffer-Wolff projector CAS, two-site 12-mode Fock Appendix A commutator checks, and 66-state sparse Fock oracle parity"
   status: completed
   sprint_goal: "Establish verified pure-Python symbolic (J, K, Gamma, Gamma') derivation and machine-precision Fock oracle before Wave 3 fourth-order ring exchange"
   active_tasks:
