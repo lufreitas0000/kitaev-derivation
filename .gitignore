@@ -8,6 +8,7 @@ build/
 *.out
 *.bbl
 *.blg
+*.egg-info/
 .venv/
 __pycache__/
 *.pyc

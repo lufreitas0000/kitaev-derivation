@@ -26,7 +26,7 @@ active_milestone:
         - tests/test_sparse_fock_oracle.py
         - data/processed/benchmarks/exchange_vs_fock_oracle.dat
   next_action:
-    authorized: false
+    authorized: true
     description: "Await PI Wave 3 gate before implementing M2.2 fourth-order ring-exchange extraction and extended-Kitaev material parameter exports."
     authority: "CURRENT_SPRINT.md"
 open_blockers: []
