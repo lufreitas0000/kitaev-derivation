@@ -2,8 +2,8 @@
   "schema_version": 1,
   "dataset": "exchange_vs_fock_oracle",
   "source_repo": "kitaev-derivation",
-  "git_sha": "0000000000000000000000000000000000000000",
-  "sha256": "97a9db77e2ff3ea2eaa9f6b38729761a097769fe7b2ff9afa2b34b135e4498ba",
+  "git_sha": "66146ad3d9cbc68edd3c445d33367c9a62ccaaf0",
+  "sha256": "3149887aa9fbd12254f2b42c2e5dcdd0b1ad65a4753c466a160a94ea74ba2a14",
   "unit_convention": "spin_12 (Pauli = spin_12 / 4 per qsl_conventions.json)",
   "geometry": "two-site z-bond t2g edge-sharing octahedra",
   "parameters": {
