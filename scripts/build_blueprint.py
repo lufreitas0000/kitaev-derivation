@@ -17,6 +17,12 @@ def main() -> int:
         if dat_file.is_file()
         else "Run scripts/generate_benchmarks.py first."
     )
+    exp_file = ROOT / "data" / "exports" / "extended_kitaev_material_couplings.dat"
+    exp_preview = (
+        html.escape(exp_file.read_text(encoding="utf-8"))
+        if exp_file.is_file()
+        else "Run scripts/generate_benchmarks.py first."
+    )
     mermaid_code = "\n".join(
         [
             "flowchart LR",
@@ -24,16 +30,22 @@ def main() -> int:
             "  classDef inv fill:#E6F4EA,color:#137333,stroke:#137333,stroke-width:1.5px;",
             "  classDef handoff fill:#F5EFE2,color:#8C4A27,stroke:#8C4A27,stroke-width:1.5px;",
             '  M21["M2.1: Second-Order SymPy Projector CAS"]:::ms',
+            '  M22["M2.2: 4th-Order BDL & 924-State Hexagon Ring"]:::ms',
             '  A1["12-Mode Fock / Appendix A Commutators (N=2,3)"]:::inv',
             '  CAS["Symbolic J-K-Gamma-Gamma\' (x,y,z C3 bonds)"]:::inv',
             '  F66["66-State scipy.sparse Two-Hole Fock Oracle (< 1e-13)"]:::inv',
+            '  BDL4["4th-Order + j=3/2 Channel + 924-State Ring (< 7.4e-10 / 7.3e-7)"]:::inv',
             '  DAT["ACID Benchmark: exchange_vs_fock_oracle.dat"]:::inv',
-            '  QMB["Handoff: finite-QMB Lean 4 CAR & Multi-Gap SW"]:::handoff',
+            '  EXP["Export: extended_kitaev_material_couplings.dat"]:::inv',
+            '  QMB["Handoff PR #52: finite-QMB KitaevKanamoriSW.lean"]:::handoff',
             "  M21 --> A1",
             "  A1 --> CAS",
             "  M21 --> F66",
             "  CAS --> DAT",
             "  F66 --> DAT",
+            "  M21 --> M22",
+            "  M22 --> BDL4",
+            "  BDL4 --> EXP",
             "  A1 --> QMB",
         ]
     )
@@ -72,8 +84,11 @@ def main() -> int:
   <li><strong>Rau–Lee–Kee Symmetries:</strong> Exact <code>C2</code> isotropy (<code>J_xx = J_yy</code>), <code>C3</code> bond equivalence across <code>(x, y, z)</code>, and <code>Gamma = 16 J_H t2 (t1 - t3) / (9 (U - J_H)(U - 3 J_H))</code> at <code>t4 = 0</code>.</li>
   <li><strong>66-State Sparse Fock Oracle Parity:</strong> Symbolic <code>SymPy</code> and exact numerical 66-state Schrieffer–Wolff agree to <code>&lt; 1e-13</code> across randomized <code>(U, J_H, t1..t4)</code>.</li>
 </ul>
-<h2>ACID Benchmark Table</h2>
+<h2>3. Wave 3 Fourth-Order &amp; Ring Exchange (M2.2)</h2>
+<p>Exact BDL/Takahashi 4th-order expansion separates infinite-SOC charge renormalization from finite-SOC <code>j_eff = 3/2</code> intermediate processes, while Peierls <code>Phi = 0 - Phi = pi</code> subtraction on the 924-state Kramers hexagon extracts the pure 6-site hexagon ring interaction.</p>
+<h2>ACID Benchmark Tables</h2>
 <pre>{dat_preview}</pre>
+<pre>{exp_preview}</pre>
 </body>
 </html>
 """

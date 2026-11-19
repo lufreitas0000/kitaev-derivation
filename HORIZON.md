@@ -2,11 +2,12 @@
 
 **Authority:** Intra-project ordered milestone horizon (`Phase -> Milestone`). Cross-project portfolio priorities live in [`/home/lu/Projects/HORIZON.md`](../../../HORIZON.md) and QSL state strategy in [`../GUIDING_QUESTIONS.md`](../GUIDING_QUESTIONS.md).
 
-## Horizon 1 — Current Sprint (`M2.1` Complete at Foundation Cutover)
-- `M2.1`: Migrate symbolic Schrieffer-Wolff projector CAS from legacy `KitaevDerivation.jl` (including `0aed437` Appendix A commutator oracles) to `uv` pure Python (`SymPy` + `mypy --strict`), independently verified against the 66-state `scipy.sparse` Fock-space oracle (`< 1e-13`).
+## Horizon 1 — Current Sprint (`M2.1` & `M2.2` Completed)
+- `M2.1`: Migrated symbolic Schrieffer-Wolff projector CAS from legacy `KitaevDerivation.jl` to `uv` pure Python (`SymPy` + `mypy --strict`), independently verified against the 66-state `scipy.sparse` Fock-space oracle (`< 1e-13`).
+- `M2.2`: Implemented fourth-order BDL/Takahashi bond exchange (`KD-003`) and 924-state 6-site Kramers hexagon ring exchange via Peierls $\pi$-flux subtraction (`KD-004`), exported idealized material tables (`data/exports/extended_kitaev_material_couplings.{dat,meta.json}`), and opened formal Lean 4 bridge PR `lufreitas0000/finite-QMB#52`.
 
-## Horizon 2 — Next Ready Milestones (Wave 3)
-- `M2.2`: Implement fourth-order two-plaquette ring-exchange & $K_2$ next-nearest-neighbor extraction and export material benchmark tables (`.dat` + `.meta.json`) for `kitaev-mf` and `ksl-sc-bilayer`.
+## Horizon 2 — Downstream Ingestion & Wave 4 Refinement
+- Ingest `data/exports/extended_kitaev_material_couplings.dat` into `kitaev-mf` / `ksl-sc-bilayer` Wave 3 extended-$J\text{-}K\text{-}\Gamma\text{-}\Gamma'$ sweeps and monitor `finite-QMB#52` review.
 
 ## Horizon 3 — Cross-Repository Formal Bridge
 - Formal Lean 4 CAR and multiplet-projector orthogonality/completeness proofs routed to `research/qmb/finite-QMB` per [`doc/lean_handoff_finite_qmb.md`](doc/lean_handoff_finite_qmb.md).

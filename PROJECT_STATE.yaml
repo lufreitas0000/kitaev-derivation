@@ -1,33 +1,37 @@
 schema_version: 1
 project_name: kitaev-derivation
-active_phase: "Phase 2: Second-Order SymPy Projector CAS & Fock Oracle"
-current_milestone: M2.1
-milestone_history: []
+active_phase: "Phase 2 Wave 3: Fourth-Order Exchange & Hexagon Ring Exchange"
+current_milestone: M2.2
+milestone_history:
+  - id: M2.1
+    name: "Pure-Python SymPy Schrieffer-Wolff projector CAS and 66-state sparse Fock oracle"
+    status: completed
+    acceptance: "Verified Appendix A commutators on 12-mode Fock spaces (N_tot=2,3) and matched SymPy (J,K,Gamma,Gamma') to <1e-13 against 66-state Fock oracle across x,y,z bonds."
+    evidence:
+      - tests/test_algebra_and_appendix_a.py
+      - tests/test_exchange_and_symmetries.py
+      - tests/test_sparse_fock_oracle.py
+      - data/processed/benchmarks/exchange_vs_fock_oracle.dat
 active_milestone:
-  id: M2.1
-  description: "Pure-Python SymPy Schrieffer-Wolff projector CAS, two-site 12-mode Fock Appendix A commutator checks, and 66-state sparse Fock oracle parity"
+  id: M2.2
+  description: "Wave 3 fourth-order BDL/Takahashi 66-state exchange, 924-state 6-site Kramers hexagon ring exchange, and finite-QMB Lean 4 bridge PR"
   status: completed
-  sprint_goal: "Establish verified pure-Python symbolic (J, K, Gamma, Gamma') derivation and machine-precision Fock oracle before Wave 3 fourth-order ring exchange"
+  sprint_goal: "Derive and cross-verify O(t^4) channel-decomposed bond exchange and 6-site Peierls pi-flux ring exchange against Richardson non-perturbative BDL direct rotation, and open Lean 4 bridge PR in finite-QMB"
   active_tasks:
     - id: T1
-      title: "Migrate KitaevDerivation.jl to uv pure-Python SymPy CAS with 66-state sparse Fock oracle and ACID benchmark/LaTeX deliverables"
+      title: "Implement 66-state 4th-order BDL/Takahashi exchange (inf-SOC & finite-SOC j=3/2 channels) and 924-state hexagon ring exchange"
       status: completed
       target_files:
-        - src/kitaev_derivation/domain/algebra.py
-        - src/kitaev_derivation/domain/kanamori_soc.py
-        - src/kitaev_derivation/services/schrieffer_wolff.py
-        - src/kitaev_derivation/services/exchange_extraction.py
-        - src/kitaev_derivation/services/sparse_fock_oracle.py
+        - src/kitaev_derivation/services/fourth_order_exchange.py
+        - tests/test_fourth_order_exchange.py
+        - scripts/generate_benchmarks.py
       validation: "make verify && make benchmarks && make labbook && make manuscript && make blueprint"
       evidence:
-        - tests/test_algebra_and_appendix_a.py
-        - tests/test_kanamori_and_soc.py
-        - tests/test_exchange_and_symmetries.py
-        - tests/test_sparse_fock_oracle.py
-        - data/processed/benchmarks/exchange_vs_fock_oracle.dat
+        - data/exports/extended_kitaev_material_couplings.dat
+        - doc/lean_handoff_finite_qmb.md
   next_action:
     authorized: true
-    description: "Await PI Wave 3 gate before implementing M2.2 fourth-order ring-exchange extraction and extended-Kitaev material parameter exports."
+    description: "Review open finite-QMB PR #52 with maintainer and ingest extended_kitaev_material_couplings.dat into downstream kitaev-mf/ksl-sc-bilayer Wave 3 parameter sweeps."
     authority: "CURRENT_SPRINT.md"
 open_blockers: []
 verified_invariants:
@@ -39,3 +43,11 @@ verified_invariants:
     name: "Rau-Lee-Kee C2/C3 Symmetry and 66-State Fock Parity"
     equation: "max_abs_diff(|SymPy - Fock_66|) < 1e-13 across (x,y,z) bonds and randomized (U, J_H, t1..t4)"
     status: verified_symbolic_and_fock_oracle
+  - id: KD-003
+    name: "Fourth-Order BDL/Takahashi Exchange & Neutral j=3/2 Intermediate Channel"
+    equation: "max|Heff^(4) - BDL_Richardson_3pt| <= 7.41e-10 (34-state inf-SOC & 66-state finite-SOC); O(t^4 / U^2 lam_SOC) channel vanishes for lam_SOC -> inf and reaches -0.00180 in J4 for RuCl3 (lam=0.15)"
+    status: verified_bdl_richardson_oracle
+  - id: KD-004
+    name: "6-Site 924-State Kramers Hexagon Peierls Ring Exchange & Lean 4 Bridge"
+    equation: "max|0.5*(H_loop^(6)(0)-H_loop^(6)(pi)) - BDL_Rich| <= 7.31e-7 (< 2e-3 rel) scaling as (t)^6; formal multiplet SW bridge opened at lufreitas0000/finite-QMB#52"
+    status: verified_peierls_bdl_and_lean_pr

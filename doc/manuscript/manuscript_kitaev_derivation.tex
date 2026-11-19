@@ -61,8 +61,33 @@ In the pure ligand-mediated limit ($t_1=t_3=t_4=0$), the $L=0$ channel vanishes 
   ]{../../data/processed/benchmarks/exchange_vs_fock_oracle.dat}
 \end{table}
 
-\section{Outlook: Fourth-Order Ring Exchange (Wave 3)}
-Wave 3 extends this exact pipeline to $O(t^4 / U^3)$ four-site plaquette ring-exchange terms and exports provenance-stamped parameter sets to \texttt{kitaev-mf} and \texttt{ksl-sc-bilayer}, while formal Lean~4 CAR/projector proofs reside in \texttt{finite-QMB}.
+\section{Fourth-Order Bond Exchange and Hexagon Ring Exchange (\texttt{M2.2})}
+% EDITORIAL QUESTION: Do finite-SOC fourth-order processes and 6-site Peierls pi-flux ring exchange match non-perturbative BDL direct rotation across idealized material regimes?
+% SOURCE [EXECUTED]: src/kitaev_derivation/services/fourth_order_exchange.py, data/exports/extended_kitaev_material_couplings.dat
+% CLAIM: Oracle-Verified (KD-003, KD-004)
+At fourth order in inter-site hopping $t$, two-site BDL perturbation theory separates cleanly into wavefunction charge-transfer renormalization $\frac{1}{2}\{(V_{PQ}R_Q^2V_{QP}),(V_{PQ}R_QV_{QP})\}$ and a neutral $j_{\mathrm{eff}}=3/2$ intermediate chain $-V_{PQ}R_QV_{QQ}R_QV_{QQ}R_QV_{QP}$ that activates when $\lambda_{\mathrm{SOC}} < \infty$. Across idealized $\alpha\text{-RuCl}_3$ and $\text{Na}_2\text{IrO}_3$ parameter sets (Table~\ref{tab:ms-m22}), analytical fourth-order tensors match non-perturbative $3$-point Richardson BDL direct rotation to $\le 7.41\times 10^{-10}$. On the $6$-site half-filled Kramers hexagon ($\binom{12}{6}=924$ states), threading a Peierls $\pi$-flux isolates the genuine six-spin ring exchange $\frac{1}{2}(H_{\mathrm{eff}}^{(6)}(0) - H_{\mathrm{eff}}^{(6)}(\pi))$ from all lower-order disconnected diagrams ($\le 7.31\times 10^{-7}$ vs non-perturbative BDL), while the formal Lean~4 CAR and multiplet resolvent bridge resides in open PR~\texttt{finite-QMB\#52}.
+
+\begin{table}[htbp]
+  \centering
+  \scriptsize
+  \caption{Fourth-order exchange decomposition and 6-site hexagon ring-exchange benchmarks across idealized Hubbard--Kanamori--SOC parameter sets.}
+  \label{tab:ms-m22}
+  \pgfplotstabletypeset[
+    col sep=space,
+    comment chars={\#},
+    columns={material_ref,lam_soc,J2,K2,J4,K4,bdl_diff4,k_ring_wp},
+    columns/material_ref/.style={string type,column name={Model Ref},string replace*={_}{\_}},
+    columns/lam_soc/.style={column name={$\lambda_{\mathrm{SOC}}$},fixed,precision=2},
+    columns/J2/.style={column name={$J_2$},fixed,precision=5},
+    columns/K2/.style={column name={$K_2$},fixed,precision=5},
+    columns/J4/.style={column name={$J_4$},fixed,precision=5},
+    columns/K4/.style={column name={$K_4$},fixed,precision=5},
+    columns/bdl_diff4/.style={column name={$\Delta_{\mathrm{BDL}}^{(4)}$},sci,precision=1},
+    columns/k_ring_wp/.style={column name={$K_{\mathrm{ring}}(W_p)$},sci,precision=2},
+    every head row/.style={before row=\toprule,after row=\midrule},
+    every last row/.style={after row=\bottomrule},
+  ]{../../data/exports/extended_kitaev_material_couplings.dat}
+\end{table}
 
 \begin{thebibliography}{9}
 \bibitem{Jackeli2009} G.~Jackeli and G.~Khaliullin, Mott Insulators in the Strong Spin-Orbit Coupling Limit: From Heisenberg to a Quantum Compass and Kitaev Models, Phys.\ Rev.\ Lett.\ \textbf{102}, 017205 (2009), \href{https://arxiv.org/abs/0809.4658}{arXiv:0809.4658}.
