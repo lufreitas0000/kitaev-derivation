@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "dataset": "exchange_vs_fock_oracle",
+  "source_repo": "kitaev-derivation",
+  "git_sha": "0000000000000000000000000000000000000000",
+  "sha256": "97a9db77e2ff3ea2eaa9f6b38729761a097769fe7b2ff9afa2b34b135e4498ba",
+  "unit_convention": "spin_12 (Pauli = spin_12 / 4 per qsl_conventions.json)",
+  "geometry": "two-site z-bond t2g edge-sharing octahedra",
+  "parameters": {
+    "cases": [
+      {
+        "regime": "JK_JH0_cancel",
+        "J_sym": 0.0,
+        "K_sym": 0.0,
+        "Gamma_sym": 0.0,
+        "Gamma_prime_sym": 0.0,
+        "max_abs_diff_lam0": 0.0
+      },
+      {
+        "regime": "JK_pure_t2",
+        "J_sym": 0.0,
+        "K_sym": -0.013368983957219251,
+        "Gamma_sym": 0.0,
+        "Gamma_prime_sym": 0.0,
+        "max_abs_diff_lam0": 8.673617379884035e-18
+      },
+      {
+        "regime": "RLK_t1_t2_t3",
+        "J_sym": -0.0014934411993235523,
+        "K_sym": -0.010516934046345811,
+        "Gamma_sym": 0.0071301247771836,
+        "Gamma_prime_sym": 0.0,
+        "max_abs_diff_lam0": 5.204170427930421e-18
+      },
+      {
+        "regime": "Trigonal_t4",
+        "J_sym": -0.001835687188628365,
+        "K_sym": -0.010174688057040998,
+        "Gamma_sym": 0.0074723707664884126,
+        "Gamma_prime_sym": 0.001568627450980392,
+        "max_abs_diff_lam0": 1.214306433183765e-17
+      },
+      {
+        "regime": "RuCl3_lam_0p15",
+        "J_sym": -0.0024564324564324566,
+        "K_sym": -0.0019536019536019536,
+        "Gamma_sym": 0.008465608465608464,
+        "Gamma_prime_sym": -0.0005209605209605209,
+        "max_abs_diff_lam0": 7.806255641895632e-18
+      }
+    ]
+  }
+}

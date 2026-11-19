@@ -1,0 +1,41 @@
+schema_version: 1
+project_name: kitaev-derivation
+active_phase: "Phase 2: Second-Order SymPy Projector CAS & Fock Oracle"
+current_milestone: M2.1
+milestone_history: []
+active_milestone:
+  id: M2.1
+  description: "Pure-Python SymPy Schrieffer-Wolff projector CAS, 0aed437 Appendix A commutators, and 66-state sparse Fock oracle parity"
+  status: completed
+  sprint_goal: "Establish verified pure-Python symbolic (J, K, Gamma, Gamma') derivation and machine-precision Fock oracle before Wave 3 fourth-order ring exchange"
+  active_tasks:
+    - id: T1
+      title: "Migrate KitaevDerivation.jl to uv pure-Python SymPy CAS with 66-state sparse Fock oracle and ACID benchmark/LaTeX deliverables"
+      status: completed
+      target_files:
+        - src/kitaev_derivation/domain/algebra.py
+        - src/kitaev_derivation/domain/kanamori_soc.py
+        - src/kitaev_derivation/services/schrieffer_wolff.py
+        - src/kitaev_derivation/services/exchange_extraction.py
+        - src/kitaev_derivation/services/sparse_fock_oracle.py
+      validation: "make verify && make benchmarks && make labbook && make manuscript && make blueprint"
+      evidence:
+        - tests/test_algebra_and_appendix_a.py
+        - tests/test_kanamori_and_soc.py
+        - tests/test_exchange_and_symmetries.py
+        - tests/test_sparse_fock_oracle.py
+        - data/processed/benchmarks/exchange_vs_fock_oracle.dat
+  next_action:
+    authorized: false
+    description: "Await PI Wave 3 gate before implementing M2.2 fourth-order ring-exchange extraction and extended-Kitaev material parameter exports."
+    authority: "CURRENT_SPRINT.md"
+open_blockers: []
+verified_invariants:
+  - id: KD-001
+    name: "Jackeli-Khaliullin Pure-Bond Cancellation and Exact K Coefficient"
+    equation: "J(t1=t3=t4=0)=0; K = -8 J_H t2^2 / (3(U-3J_H)(U-J_H)) (spin-1/2); K(J_H=0)=0"
+    status: verified_symbolic_and_fock_oracle
+  - id: KD-002
+    name: "Rau-Lee-Kee C2/C3 Symmetry and 66-State Fock Parity"
+    equation: "max_abs_diff(|SymPy - Fock_66|) < 1e-13 across (x,y,z) bonds and randomized (U, J_H, t1..t4)"
+    status: verified_symbolic_and_fock_oracle
