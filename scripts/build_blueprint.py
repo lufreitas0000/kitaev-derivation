@@ -37,7 +37,7 @@ def main() -> int:
             '  BDL4["4th-Order + j=3/2 Channel + 924-State Ring (< 7.4e-10 / 7.3e-7)"]:::inv',
             '  DAT["ACID Benchmark: exchange_vs_fock_oracle.dat"]:::inv',
             '  EXP["Export: extended_kitaev_material_couplings.dat"]:::inv',
-            '  QMB["Handoff PR #52: finite-QMB KitaevKanamoriSW.lean"]:::handoff',
+            '  QMB["Merged PR #52: finite-QMB KitaevKanamoriSW.lean (7098b031)"]:::handoff',
             "  M21 --> A1",
             "  A1 --> CAS",
             "  M21 --> F66",

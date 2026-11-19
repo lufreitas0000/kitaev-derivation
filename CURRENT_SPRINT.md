@@ -9,8 +9,8 @@ Complete Wave 3 `M2.2`: exact 66-state fourth-order BDL/Takahashi bond exchange 
 
 ## Scope and Non-Goals
 
-Exports represent idealized Hubbard–Kanamori–SOC reference models (not trigonal-field DFT fits). Formal Lean 4 theorem acceptance remains gated on maintainer review of `finite-QMB#52`.
+Exports represent idealized Hubbard–Kanamori–SOC reference models (not trigonal-field DFT fits). Follow-up formal proofs extending `FiniteQMB.Models.KitaevKanamoriSW` (multi-gap Sylvester `[H_0, S] = V_{od}` operator and concrete 66-state Fock isomorphism) are tracked on `research/qmb/finite-QMB` (`main` @ `7098b031`).
 
 ## Exact Next Step
 
-Await maintainer review/merge of [finite-QMB#52](https://github.com/lufreitas0000/finite-QMB/pull/52) and ingest `data/exports/extended_kitaev_material_couplings.dat` into downstream Wave 3 sweeps.
+Ingest `data/exports/extended_kitaev_material_couplings.dat` into downstream `kitaev-mf` / `ksl-sc-bilayer` Wave 2–3 sweeps (and track follow-up multi-gap Sylvester formalization in `finite-QMB`).

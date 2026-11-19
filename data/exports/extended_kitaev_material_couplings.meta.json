@@ -2,8 +2,8 @@
   "schema_version": 1,
   "dataset": "extended_kitaev_material_couplings",
   "source_repo": "kitaev-derivation",
-  "git_sha": "98d813a7ac0a202776c4b7b645df38e0974ce593",
-  "sha256": "50a6611c6f4eae12b6c78e93ff2df96939afa6ae86df48342ad503047a85bea2",
+  "git_sha": "92f5b600fd21dea6a6b331bea236d3f9acd346e4",
+  "sha256": "063db9a3ca3b61d4f1a05dcb234cc735b8293d7fba55f6ee4555ac2c6c74e457",
   "unit_convention": "spin_12 for J2..Gp_tot (Pauli = spin_12 / 4); Pauli operator W_p = prod_{i=0}^5 sigma_i^{gamma_i} for k_ring_wp (idealized Hubbard-Kanamori-SOC model parameters)",
   "geometry": "z-bond 66-state Fock 2nd+4th order BDL and 6-site 924-state Kramers hexagon",
   "parameters": {

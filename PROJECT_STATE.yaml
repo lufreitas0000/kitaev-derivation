@@ -31,7 +31,7 @@ active_milestone:
         - doc/lean_handoff_finite_qmb.md
   next_action:
     authorized: true
-    description: "Review open finite-QMB PR #52 with maintainer and ingest extended_kitaev_material_couplings.dat into downstream kitaev-mf/ksl-sc-bilayer Wave 3 parameter sweeps."
+    description: "Ingest extended_kitaev_material_couplings.dat into downstream kitaev-mf/ksl-sc-bilayer Wave 2-3 parameter sweeps (PR finite-QMB#52 merged @ 7098b031)."
     authority: "CURRENT_SPRINT.md"
 open_blockers: []
 verified_invariants:
@@ -49,5 +49,5 @@ verified_invariants:
     status: verified_bdl_richardson_oracle
   - id: KD-004
     name: "6-Site 924-State Kramers Hexagon Peierls Ring Exchange & Lean 4 Bridge"
-    equation: "max|0.5*(H_loop^(6)(0)-H_loop^(6)(pi)) - BDL_Rich| <= 7.31e-7 (< 2e-3 rel) scaling as (t)^6; formal multiplet SW bridge opened at lufreitas0000/finite-QMB#52"
+    equation: "max|0.5*(H_loop^(6)(0)-H_loop^(6)(pi)) - BDL_Rich| <= 7.31e-7 (< 2e-3 rel) scaling as (t)^6; formal multiplet SW bridge merged in lufreitas0000/finite-QMB#52 (7098b031)"
     status: verified_peierls_bdl_and_lean_pr

@@ -14,7 +14,7 @@ Legacy `KitaevDerivation.jl` contained a 30-line uncompiled Lean stub defining `
 
 ## Executed Bridge PR (`finite-QMB`)
 
-- **Open Pull Request:** [lufreitas0000/finite-QMB#52](https://github.com/lufreitas0000/finite-QMB/pull/52) (branch `feat/kitaev-kanamori-sw-bridge` @ commit `9ab7df5152f61f9c0769b5f1ba079eaa0ad3d932`, left unmerged for independent maintainer review).
+- **Merged Pull Request:** [lufreitas0000/finite-QMB#52](https://github.com/lufreitas0000/finite-QMB/pull/52) (branch `feat/kitaev-kanamori-sw-bridge` @ `9ab7df5152f61f9c0769b5f1ba079eaa0ad3d932`, merged into `finite-QMB` `main` at `7098b03165662d626969bf3056dc31acded2df1a` with passing `Lean 4 CI` and remote/local branch deleted).
 - **Module:** `FiniteQMB.Models.KitaevKanamoriSW` (wired into `FiniteQMB.lean`), compiled with `lake build FiniteQMB.Models.KitaevKanamoriSW FiniteQMB` (`9200` jobs, `-DwarningAsError=true`, zero `sorry`, standard axioms `[propext, Classical.choice, Quot.sound]`):
   - `car_hopping_commutator`: `[c_i, \sum_{j,k} B_{jk} c_j^\dagger c_k] = \sum_k B_{ik} c_k` for `CARSystem`.
   - `MultipletProjectorFamily`: orthogonal excited-multiplet projectors (`Q0_idem`, `P0_mul_Q0`) and reduced resolvent `reducedResolvent = \sum_L \Delta_L^{-1} P_L` (`multiplet_resolvent_mul`).
