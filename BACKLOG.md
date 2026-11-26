@@ -40,5 +40,54 @@ Question: Derive the flux-sensitive sixth-order operator directly from the multi
 Status: incubating, triggered if scalar onsite bias in #2 does not generate DM or is inadequate.  
 Question: Derive the most general symmetry-allowed electric-field-induced changes to orbital hopping matrices and local crystal fields, including antisymmetric orbital hopping in fixed oriented bonds. Distinguish scalar onsite bias from changes to hopping/ligand geometry and any external magnetic field. Determine which DM components can be nonzero and their field parity, with independently justified material parameters; no forced nonzero answer.
 
+## Mathematical-foundations implementation queue (deferred)
+
+The research and guiding-document task is [#9](https://github.com/lufreitas0000/kitaev-derivation/issues/9) (Q4), with the preliminary [reading map](doc/rnd/exploratory/mathematical_foundations_survey.md). The following are candidate implementations, not commitments to build nine frameworks. Promote only a structure that passes its small independent pilot and demonstrates a reusable simplification, generalization or stronger guarantee. Apply governance foundation-escrow requirements when a new substrate is proposed; do not optimize compression metrics as targets.
+
+## IDEA-009 — Representation theory and symmetry-adapted multiplets
+Status: incubating; after #9.
+Question: Generate exterior-power representations, Clebsch–Gordan intertwiners and Schur multiplicity blocks from the microscopic orbital/spin model; use reduced matrix elements and exact small-block resolvents rather than case-by-case diagonalization.
+Pilot / promotion trigger: recover the 15-state two-hole decomposition and finite-SOC blocks against the independent full matrix; show reuse in another consumer (e.g. three-hole multiplets or lowered-symmetry local fields). See IDEA-002 and IDEA-005.
+
+## IDEA-010 — Noncommutative operator algebra and canonical normal forms
+Status: incubating; after #9.
+Question: Factor CAR relations into a canonical rewriting kernel; investigate confluence/critical overlaps (Diamond Lemma), bilinear Lie algebra relations, and exact operator-equality certificates. Route formal proofs to finite-QMB.
+Pilot / promotion trigger: certify representative rewrite identities and their signs against an independent full-Fock representation, then reuse in exchange and density derivations. A fixed-N sector is not itself a faithful representation of the entire CAR algebra.
+
+## IDEA-011 — Symmetry-equivariant effective operators and invariant theory
+Status: incubating; after #9.
+Question: Construct invariant/equivariant tensor spaces from the oriented cluster little group, site permutation and time reversal (real-linear for antiunitary actions). Generate admissible operator bases and exact selection rules before evaluating any coefficients.
+Pilot / promotion trigger: recover unbiased bond restrictions, biased-bond DM allowances and a time-reversal-even triangle basis (#2, #5); compare against explicit full exchange/density tensors. Symmetry-allowed does not imply a nonzero coefficient; require gauge covariance and independent oracle parity.
+
+## IDEA-012 — Hopping graphs, conservation laws and gauge-invariant virtual paths
+Status: incubating; after #9.
+Question: Enumerate directed virtual hopping paths on graphs, prune by charge conservation and support, preserve operator ordering and fermionic signs, and classify gauge-covariant monomials and closed-loop phases.
+Pilot / promotion trigger: reproduce bond backtracking, NN–NNN triangle and hexagon winding path classes against independent small-cluster matrices (#5, #6, #8). Balanced directed occupation flow is necessary but not sufficient (intermediate occupancies, Pauli blocking and matrix elements matter).
+
+## IDEA-013 — Linked clusters, incidence algebras and Möbius inversion
+Status: incubating; after #9.
+Question: Express cluster subtraction on a well-defined poset of embedded subclusters, with compatible effective gauges, spin embeddings, graph multiplicities and size-additivity hypotheses; derive connected weights by Möbius inversion.
+Pilot / promotion trigger: recover three-site proper-subcluster subtraction and disjoint-union additivity in an independently checked SW gauge; prove the relevant compatibility before general enumeration. See IDEA-001 and #5.
+
+## IDEA-014 — Spectral theory, Feshbach–Schur reduction and analytic perturbation
+Status: incubating; after #9.
+Question: Derive reusable nested block-resolvent identities for 66→36→4 states when the eliminated blocks are invertible; retain exact rational denominators and relate the energy-dependent Feshbach operator to energy-independent Hermitian SW reduction. Study analytic spectral projectors, complex-parameter gap domains and certified remainders.
+Pilot / promotion trigger: match reduced and full bond eigenvalue conditions and direct-rotation results, document invertibility and scale hierarchy, then derive or explicitly delimit a convergence bound. See IDEA-002, IDEA-006 and #7.
+
+## IDEA-015 — Operator algebras and a common dressed-observable map
+Status: incubating; after #9.
+Question: Use a shared isometric embedding W from the effective space into the microscopic space: Phi(A)=W†AW. It is a unital completely positive compression, not generally multiplicative; the exact product defect is Phi(AB)-Phi(A)Phi(B)=W†A(1-WW†)BW. Derive Hamiltonian, charge, current and correlators consistently (including parameter-dependent effective-basis terms in differentiation).
+Pilot / promotion trigger: verify operator neutrality, observables and gauge covariance against the bond and triangle Fock oracles, and show that one map removes duplicated transformation logic without losing information about the eliminated subspace. See #6.
+
+## IDEA-016 — Lie algebra, graded adjoint recursion and unitary flows
+Status: incubating; after #9.
+Question: Investigate graded commutator/BCH recursion and continuous unitary block-diagonalizing flows as alternatives or checks for the present BDL expansion; exploit reusable adjoint identities and order/support bookkeeping.
+Pilot / promotion trigger: reproduce an existing fourth-order bond generator/result and third-order connected observable in comparable gauges with independent verification. A continuous unitary change of basis is not by itself a Wilsonian RG flow or evidence of infrared universality.
+
+## IDEA-017 — Categorical organization and local graded operator nets
+Status: incubating; after #9; lowest implementation priority.
+Question: Investigate graph-indexed local CAR algebras, graded tensor products, compatible inclusions and graph-isomorphism equivariance; identify precise compositional laws for cluster construction and embeddings. Do not assume interacting low-energy projectors form a natural transformation under arbitrary subsystem inclusions, or that compression is an algebra homomorphism.
+Pilot / promotion trigger: exhibit and verify a nontrivial graph-isomorphism or disjoint-union compatibility theorem that simplifies at least two actual consumers. Prefer ordinary explicit interfaces and tested lemmas unless categorical machinery proves a concrete gain; no framework for its own sake.
+
 ## Scope boundary
 The active microscopic model is three-orbital low-spin $d^5$, not the full five-orbital $d$ shell. Explicit $e_g$ orbitals and high-spin extensions are outside the current program; this is a model-scope decision, not a universal claim of physical irrelevance. Keep formal CAR/projector/multiplet extensions in finite-QMB; no Lean proof or finite-cluster numerical test alone certifies the entire effective lattice model.
