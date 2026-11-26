@@ -6,11 +6,11 @@ Migrated cleanly from legacy Julia `KitaevDerivation.jl` (`archive/KitaevDerivat
 
 ## Goal
 
-Establish a bug-free, algebraically exact symbolic Schrieffer-Wolff projector CAS in Python (`SymPy`) verified to machine precision (`< 1e-13`) against an independent 66-state two-hole Fock-space numerical oracle (`scipy.sparse`) across $x, y, z$ bonds and $(U, J_H, t_1, t_2, t_3, t_4, \lambda_{\mathrm{SOC}})$ parameters, with ACID benchmark tables and self-contained Lab Book / Manuscript / Blueprint deliverables.
+Develop an algebraically exact (within the stated model and approximation) symbolic Schrieffer-Wolff projector CAS in Python (`SymPy`) verified to machine precision (`< 1e-13`) against an independent 66-state two-hole Fock-space numerical oracle (`scipy.sparse`) across $x, y, z$ bonds and $(U,J_H,t_1,t_2,t_3,t_4)$ in the SOC-projector approximation, with numerical finite-SOC checks distinguished from symbolic results, with ACID benchmark tables and self-contained Lab Book / Manuscript / Blueprint deliverables.
 
 ## Scope
 
-- **Owns:** Symbolic CAR normal-ordering, exact $d^4$ Hubbard-Kanamori multiplet projectors ($P_{[L=0,1,2]}$), $t_{2g}$ $T\text{–}P$ SOC Kramers doublet projection, second-order (and future fourth-order ring-exchange) Schrieffer-Wolff reductions, independent 66-state Fock oracle, and ACID parameter exports for `kitaev-mf` / `ksl-sc-bilayer`.
+- **Owns:** Symbolic CAR normal-ordering, exact $d^4$ Hubbard-Kanamori multiplet projectors ($P_{[L=0,1,2]}$), $t_{2g}$ $T\text{–}P$ SOC Kramers doublet projection, second-order symbolic and fourth-order numerical isolated-bond Schrieffer-Wolff reductions, independent 66-state Fock oracle, separately modeled phenomenological Kramers hexagon winding exchange, and provenance-tagged parameter exports for `kitaev-mf` / `ksl-sc-bilayer`.
 - **Strictly Out of Scope:** Lattice-scale Bogoliubov-de Gennes mean-field loops (`kitaev-mf`), multi-site spin ED / 2-RDM SDP (`kitaev-numerics`), spectral walks (`kitaev-walk-geometry`), and formal Lean 4 proofs (`research/qmb/finite-QMB`).
 
 ## Definition of Done (DoD)
@@ -20,6 +20,16 @@ Establish a bug-free, algebraically exact symbolic Schrieffer-Wolff projector CA
 - `doc/labbook/labbook_kitaev_derivation.pdf`, `doc/manuscript/manuscript_kitaev_derivation.pdf`, and `build/blueprint/index.html` compile with zero LaTeX errors or undefined references/citations.
 - `scripts/uow.py check --repo kitaev-derivation`, `governance/pg10.py check`, and `scripts/fiscalize_state.py --repo kitaev-derivation` pass with zero warnings.
 
-## Next Steps
+## Scientific scope and next steps
 
-Complete Wave 3 fourth-order ring-exchange extraction (`M2.2`) and $\alpha\text{-RuCl}_3$ / $d^5\text{–}d^7$ benchmark parameter tables for downstream `kitaev-mf` and `ksl-sc-bilayer` extended-$K\text{–}J\text{–}\Gamma\text{–}\Gamma'$ campaigns after Wave 1/Wave 2 QSL gates close.
+The starting model is three-orbital low-spin $d^5$ ($t_{2g}$ only). Six spin-orbitals per site give $\binom{12}{2}=66$ states on an isolated two-hole bond, with 36 neutral states and four retained Kramers-product states. Hopping conserves isolated-cluster total hole number but changes local occupations; superexchange requires integrating out virtual excitations, not pre-projecting hopping. Full five-orbital $d$-shell/$e_g$ modeling is outside the active scope.
+
+M2.1 and M2.2 are completed within their tested scope. The legacy "infSOC" / zero-lambda selector denotes a SOC-projector / charge-denominator approximation, not literal infinite SOC at fixed charge parameters; physical finite SOC is treated numerically in the bond oracle. The fourth-order coefficient cross-check does not certify accuracy at physical hopping. The 924-state hexagon calculation is an auxiliary two-mode Kramers Hubbard model, not yet a microscopic multiorbital sixth-order result; flux axes and operator interpretation are under audit (#8).
+
+Near-term goals (planned, not implemented):
+- Local electrostatic potentials: bias-dependent exchange and all DM components, including possible symmetry-protected zeros (#2).
+- Direct orbital NNN hopping $t_2'$ and three-site connected processes (#5).
+- Effective charge density including biased-bond and triangular terms, reproducing Pereira–Egger (2020) and Freitas et al. (2024) (#6).
+- Convention correction (#4), scale-aware convergence diagnostics (#7), and hexagon audit (#8).
+
+See [HORIZON.md](HORIZON.md) for the ordered todo list and issue links; [BACKLOG.md](BACKLOG.md) for explicit symbolic finite SOC, trigonal distortions, all-orders bounds and complete microscopic multicluster extensions. Current sprint and completed milestone evidence remain in [PROJECT_STATE.yaml](PROJECT_STATE.yaml).
